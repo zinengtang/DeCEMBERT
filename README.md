@@ -20,7 +20,6 @@ git clone https://github.com/NVIDIA/apex
 cd apex
 pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
 ```
-O2 option in apex will be less stable but still recommended. 
 
 ## Running
 Running pre-training command
