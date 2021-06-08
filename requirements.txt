@@ -1,0 +1,9 @@
+torch
+pandas
+tensorboardX
+easydict
+pandas
+nltk
+scipy
+boto3
+requests
