@@ -340,12 +340,7 @@ class BertSelfAttention(nn.Module):
             attention_scores = attention_scores + qs
 
         attention_scores = attention_scores / math.sqrt(self.attention_head_size)
-    
-        if att_ids is not None:
-            selective_att_scores, selective_att_scores_r = get_constrained_attention_scores(attention_probs)
-        else:
-            selective_att_scores = 0
-            selective_att_scores_r = 0
+
             
         # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
         attention_scores_1 = attention_scores + attention_mask
@@ -359,6 +354,12 @@ class BertSelfAttention(nn.Module):
             self.debug_attention_probs[:_pos, :_pos].copy_(
                 attention_probs[0].mean(0).view(_pos, _pos))
 
+        if att_ids is not None:
+            selective_att_scores, selective_att_scores_r = get_constrained_attention_scores(attention_probs, att_ids)
+        else:
+            selective_att_scores = 0
+            selective_att_scores_r = 0
+            
         # This is actually dropping out entire tokens to attend to, which might
         # seem a bit unusual, but is taken from the original Transformer paper.            
         context_layer = torch.matmul(attention_probs, value_layer)
