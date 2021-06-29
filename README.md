@@ -38,7 +38,6 @@ Github Link: [3D-RexNext](https://github.com/kenshohara/3D-ResNets-PyTorch)
 ## Dense Captions Extraction Code
 
 Following the implementation of dense captioning aided pre-training, we pre-extract dense captions with the following code. 
-We also adapt it to our implementation in this git repo under directory 'DenseCap'.
 
 Original Github Link: [Dense Captioning with Joint Inference and Visual Context](https://github.com/linjieyangsc/densecap) (pytorch reproduced)
 
