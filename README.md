@@ -2,10 +2,6 @@
 
 Implementation of NAACL2021 paper: [DECEMBERT: Learning from Noisy Instructional Videos via Dense Captions and Entropy Minimization](https://www.aclweb.org/anthology/2021.naacl-main.193/) by *Zineng Tang, *Jie Lei, Mohit Bansal
 
-Base code structure in current git repo
-
-Complete code coming soon.... (TODO: add constrained attention, add downstream tasks)
-
 ## Setup
 ```
 # Create python environment (optional)
@@ -56,6 +52,9 @@ MSRVTT
 [MSRVTT-QA](https://github.com/xudejing/video-question-answering)
 
 [Youcook2](http://youcook2.eecs.umich.edu/)
+
+
+(TODO: add downstream tasks)
 
 ## Reference
 ```
