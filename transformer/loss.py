@@ -4,6 +4,46 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.loss import _Loss
 
+def get_constrained_attention_scores(attention_probs, att_ids):
+    cand1 = []
+    cand2 = []
+    cand3 = []
+    cand1_r = []
+    cand2_r = []
+    cand3_r = []
+
+    for i, att_id in enumerate(att_ids): 
+        cand1i = attention_probs[i][:, (att_id[0]).int():(att_id[1]).int(), (att_id[2]).int():(att_id[3]).int()]
+        cand1i_max = torch.max(cand1i, 1)[0].mean(1)
+
+        cand1i_r = attention_probs[i][:, (att_id[2]).int():(att_id[3]).int(), (att_id[0]).int():(att_id[1]).int()]
+        cand1i_r_max = torch.max(cand1i_r, 1)[0].mean(1)
+
+        cand1.append(cand1i_max)
+        cand1_r.append(cand1i_r_max)
+
+        cand2i = attention_probs[i][:, (att_id[0]).int():(att_id[1]).int(), (att_id[3]).int():(att_id[4]).int()] 
+        cand2i_max = torch.max(cand2i, 1)[0].mean(1)
+
+        cand2i_r = attention_probs[i][:, (att_id[3]).int():(att_id[4]).int(), (att_id[0]).int():(att_id[1]).int()] 
+        cand2i_r_max = torch.max(cand2i_r, 1)[0].mean(1)
+
+        cand2.append(cand2i_max)
+        cand2_r.append(cand2i_r_max)
+
+        cand3i = attention_probs[i][:, (att_id[0]).int():(att_id[1]).int(), (att_id[4]).int():(att_id[5]).int()]
+        cand3i_max = torch.max(cand3i, 1)[0].mean(1)
+
+        cand3i_r = attention_probs[i][:, (att_id[4]).int():(att_id[5]).int(), (att_id[0]).int():(att_id[1]).int()]
+        cand3i_r_max = torch.max(cand3i_r, 1)[0].mean(1)
+
+        cand3.append(cand3i_max)
+        cand3_r.append(cand3i_r_max)
+
+    selective_att_scores = torch.cat([torch.stack(cand1, 0).unsqueeze(-1), torch.stack(cand2, 0).unsqueeze(-1), torch.stack(cand3, 0).unsqueeze(-1)], -1)
+    selective_att_scores_r = torch.cat([torch.stack(cand1_r, 0).unsqueeze(-1), torch.stack(cand2_r, 0).unsqueeze(-1), torch.stack(cand3_r, 0).unsqueeze(-1)], -1)
+    return selective_att_scores, selective_att_scores_r
+            
 class LabelSmoothingLoss(nn.Module):
     """
     With label smoothing,
