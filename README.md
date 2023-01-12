@@ -25,10 +25,12 @@ bash scripts/pretrain.sh 0,1,2,3
 
 ## Video Features Extraction Code
 
-We extracted our 2D-level video features with ResNet152 
+The feature extraction scripts is provided in the feature_extractor folder. 
+
+We extract our 2D-level video features with ResNet152 
 Github Link: [torchvision](https://github.com/pytorch/vision)
 
-We extracted our 3D-level video features with 3D-ResNext
+We extract our 3D-level video features with 3D-ResNext
 Github Link: [3D-RexNext](https://github.com/kenshohara/3D-ResNets-PyTorch) 
 
 ## Dense Captions Extraction Code
